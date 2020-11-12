@@ -1,33 +1,40 @@
-print(
-    """
-**************************************
-**   Welcome to the Madlib Game!   **
-**   Please respond to the prompts. **
-**************************************
-"""
-)
-# with open("assets/sample.txt") as file:
-#     print(file.read())
-open_sample = open("assets/sample.txt")
 import re
 
 
 def read_template(path):
-    content = open(path).read()
-    return content.strip()
-
-
-string = read_template("assets/sample.txt")
+    with open(path) as file:
+        content = file.read()
+        stripped_content = content.strip()
+    return stripped_content
 
 
 def parse_template(string):
     split_template_list = re.findall(r"\{(.*?)\}", string)
     # print(split_template_list)
-    print(re.sub(r"\{(.*?)\}", "{}", string))
-    return split_template_list
+    split_string = re.sub(r"\{(.*?)\}", "{}", string)
+    return split_string, split_template_list
 
 
-print(parse_template(string))
+def merge_template(bare_temp, resp):
+    return bare_temp.format(*resp)
 
 
-def merge_template(bare_temp, term_list):
+if __name__ == "__main__":
+    print(
+        """
+    **************************************
+    **   Welcome to the Madlib Game!   **
+    **   Please respond to the prompts. **
+    **************************************
+    """
+    )
+    string = read_template("assets/sample.txt")
+    # print(parse_template(string))
+    responses = []
+    bare_string, word_list = parse_template(string)
+    # print(word_list)
+    for word in word_list:
+        response = input(f"Give me a {word} >")
+        responses.append(response)
+    print(responses)
+    print(merge_template(bare_string, responses))
