@@ -1,6 +1,6 @@
 # Lab 03
 
-## Math Erros, Files and Packaging 
+## Erros, Files and Packaging 
 Lab to open, read and edit files.
 
 ### Pull Request
